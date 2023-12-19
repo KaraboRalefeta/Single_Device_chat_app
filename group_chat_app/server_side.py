@@ -14,13 +14,14 @@ def server_socket():
     server.listen(0)
 
     while True:
-        new_sock, address = server.accept()
-        name = new_sock.recv(1024).decode("utf-8")
-        people[new_sock] = name
-        thread = threading.Thread(target=handle_client, args = (people, new_sock, server))
-        thread.start()
-
-        pass
+        try:
+            new_sock, address = server.accept()
+            name = new_sock.recv(1024).decode("utf-8")
+            people[new_sock] = name
+            thread = threading.Thread(target=handle_client, args = (people, new_sock, server))
+            thread.start()
+        except:
+            break
 
 
 
